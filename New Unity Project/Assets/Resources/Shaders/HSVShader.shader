@@ -36,10 +36,8 @@
          {
  
             CGPROGRAM
- 			#pragma target 3.0
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
             #include "HueLib.cginc"
  
 			uniform sampler2D _MainTex;
@@ -48,9 +46,15 @@
 			uniform float _Val;
 			uniform float _Alpha;
 			uniform float4 _MainTex_ST;
-			uniform float4 _MatchColor;
+			uniform half3 _MatchColor;
 			uniform half _MatchError;
-
+            
+            struct appdata_base
+            {
+                float4 vertex : POSITION;
+                float2 texcoord : TEXCOORD0; 
+            };
+            
 			struct v2f 
 			{
 				float4  pos : SV_POSITION;
@@ -61,7 +65,7 @@
 			{
 				v2f o;
 				o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
-				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+				o.uv = v.texcoord;
 				return o;
 			}
 
@@ -75,7 +79,7 @@
 				if(s.r < _MatchError && s.g < _MatchError && s.b < _MatchError)
 				{
 					float3 shift = float3(_HueShift, _Sat, _Val);
-					return half4( half3(shift_col(col, shift)), col.a * _Alpha);
+					return half4(half3(shift_col(col, shift)), col.a * _Alpha);
 				}else
 				{
 					col.a = col.a * _Alpha;
