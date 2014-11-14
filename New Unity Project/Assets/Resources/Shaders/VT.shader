@@ -1,11 +1,8 @@
-﻿Shader "Sprites/ClipArea"
+﻿Shader "Sprites/VT"
 {
     Properties
     {
         _MainTex ("Base (RGB), Alpha (A)", 2D) = "white" {}
-        _Fill ("Fill", Range(0.0, 1.0)) = 1.0
-        _MinX ("MinX", Float) = 0
-        _MaxX ("MaxX", Float) = 1
      }
 
     SubShader
@@ -32,14 +29,12 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
+			#pragma target 3.0
+			#pragma glsl
             #include "UnityCG.cginc"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _MinX;
-            float _MaxX;
-            float _Fill;
 
             struct appdata_t
             {
@@ -50,25 +45,20 @@
             struct v2f
             {
                 float4 vertex : POSITION;
-                float2 texcoord : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             v2f vert (appdata_t v)
             {
                 v2f o;
                 o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-                o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
+                o.color = tex2Dlod(_MainTex, v.texcoord);
                 return o;
             }
 
             half4 frag (v2f IN) : COLOR 
             {
-            	if ((IN.texcoord.x<_MinX)|| (IN.texcoord.x>(_MinX+_Fill*(_MaxX-_MinX))))
-                {
-                    half4 colorTransparent = half4(0,0,0,0) ;
-                    return  colorTransparent ;
-                }
-                return tex2D(_MainTex, IN.texcoord);
+            	return IN.color; 
             }
             ENDCG
         }

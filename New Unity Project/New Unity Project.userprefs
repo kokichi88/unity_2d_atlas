@@ -1,8 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Resources/Shaders/ClipArea.shader">
     <Files>
-      <File FileName="Assets/Scripts/Main.cs" Line="70" Column="31" />
+      <File FileName="Assets/Resources/Shaders/ClipArea.shader" Line="60" Column="66" />
+      <File FileName="Assets/Resources/Shaders/VT.shader" Line="1" Column="16" />
+      <File FileName="Assets/Resources/Shaders/HSVShader.shader" Line="59" Column="61" />
+      <File FileName="Assets/Resources/Shaders/HueLib.cginc" Line="6" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
